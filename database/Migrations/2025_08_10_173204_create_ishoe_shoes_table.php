@@ -16,7 +16,9 @@ return new class extends Migration {
       $table->increments('id');
       // Your fields...
       $table->string('reference')->unique();
-      $table->float('price')->default(0)->unsigned();
+      $table->float('base_price')->default(0)->unsigned();
+      $table->float('options_price')->default(0)->unsigned();
+      $table->float('total_price')->default(0)->unsigned();
       // Audit fields
       $table->timestamps();
       $table->auditStamps();

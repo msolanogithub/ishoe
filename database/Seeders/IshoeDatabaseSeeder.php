@@ -6,11 +6,14 @@ use Illuminate\Database\Seeder;
 
 class IshoeDatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        // $this->call([]);
-    }
+  /**
+   * Run the database seeds.
+   */
+  public function run(): void
+  {
+    $this->call([
+      InitialOptionsSeeder::class,
+      InitialShoesSeeder::class,
+    ]);
+  }
 }
