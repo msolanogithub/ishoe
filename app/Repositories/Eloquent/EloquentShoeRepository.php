@@ -85,7 +85,7 @@ class EloquentShoeRepository extends EloquentCoreRepository implements ShoeRepos
    * @param $data
    * @return void
    */
-  protected function beforeUpdate(&$data): void
+  protected function beforeUpdate(&$model, &$data): void
   {
     $this->calcPrices($data);
   }
