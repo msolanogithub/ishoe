@@ -47,6 +47,14 @@ class EloquentShoeRepository extends EloquentCoreRepository implements ShoeRepos
      * if (isset($filter->status)) $query->where('status', $filter->status);
      *
      */
+    if (isset($filter->search)) {
+      $query->where(function ($query) use ($filter) {
+        $query->whereHas('translations', function (Builder $q) use ($filter) {
+          $q->where('title', 'like', "%{$filter->search}%");
+        });
+      })->orWhere('id', 'like', '%' . $filter->search . '%')
+        ->orWhere('reference', 'like', '%' . $filter->search . '%');
+    }
 
     //Response
     return $query;
@@ -96,7 +104,7 @@ class EloquentShoeRepository extends EloquentCoreRepository implements ShoeRepos
    */
   public function calcPrices(&$data): void
   {
-    if(isset($data['options']) && count($data['options'])){
+    if (isset($data['options']) && count($data['options'])) {
       $optionsPrice = Option::whereIn('id', $data['options'])->sum('price');
       $data['options_price'] = $optionsPrice;
       $data['total_price'] = $optionsPrice + $data['base_price'];
