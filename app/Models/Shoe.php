@@ -42,6 +42,7 @@ class Shoe extends CoreModel
   public array $mediaFillable = [
     'mainimage' => 'single'
   ];
+  public array $searchable = ['reference', 'id', 'title'];
   public function options(): BelongsToMany
   {
     return $this->belongsToMany(Option::class, 'ishoe__shoe_options');
