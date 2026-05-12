@@ -5,6 +5,7 @@ namespace Modules\Ishoe\Models;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Imagina\Icore\Models\CoreModel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
@@ -46,6 +47,11 @@ class Option extends CoreModel
   public function parent(): BelongsTo
   {
     return $this->belongsTo(Option::class, 'parent_id');
+  }
+
+  public function children(): HasMany
+  {
+    return $this->hasMany(Option::class, 'parent_id');
   }
 
   public function shoes(): BelongsToMany
