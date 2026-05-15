@@ -97,7 +97,7 @@ class EloquentShoeRepository extends EloquentCoreRepository implements ShoeRepos
    */
   public function calcPrices(&$data): void
   {
-    if (isset($data['options']) && count($data['options'])) {
+    if (isset($data['options']) && isset($data['base_price']) && count($data['options'])) {
       $optionsPrice = Option::whereIn('id', $data['options'])->sum('price');
       $data['options_price'] = $optionsPrice;
       $data['total_price'] = $optionsPrice + $data['base_price'];
