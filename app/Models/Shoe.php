@@ -3,6 +3,7 @@
 namespace Modules\Ishoe\Models;
 
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Imagina\Icore\Models\CoreModel;
 
@@ -38,11 +39,13 @@ class Shoe extends CoreModel
     'deleted' => []
   ];
   public array $translatedAttributes = ['title'];
-  protected $fillable = ['reference', 'base_price', 'options_price', 'total_price'];
+  protected $fillable = ['reference', 'base_price', 'options_price', 'total_price', 'cast_options'];
+  protected $casts = ['cast_options' => AsArrayObject::class];
   public array $mediaFillable = [
     'mainimage' => 'single'
   ];
   public array $searchable = ['reference', 'id', 'title'];
+
   public function options(): BelongsToMany
   {
     return $this->belongsToMany(Option::class, 'ishoe__shoe_options');
@@ -52,6 +55,7 @@ class Shoe extends CoreModel
   {
     return $this->belongsToMany('Modules\Iuser\Models\User', 'ishoe__user_products')->withPivot('price');
   }
+
   public function files()
   {
     if (isModuleEnabled('Imedia')) {
